@@ -6,7 +6,7 @@ const server = 'http://localhost:3000'
 
 function App() {
   const [message, setMessage] = useState('');
-  const [display, setDisplay] = useState(['']);
+  const [display, setDisplay] = useState([]);
   const socketRef = useRef();
   
   useEffect(() => {
@@ -17,15 +17,15 @@ function App() {
   useEffect(() => {
     // const socket = socketClient(server)
     socketRef.current.on('chat-received', (text) => {
-      setDisplay(text)
+      setDisplay(prev => [...prev, message])
     })
 
-  }, [display])
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socketRef.current.emit('chat-input', message);
-    setDisplay((prev) => [...prev, message])
+    // setDisplay((prev) => [...prev, message])
     // setHackRender(hackRender ? false : true);
     
   }
